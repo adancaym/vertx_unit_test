@@ -56,7 +56,7 @@ public class TestMainVerticle {
   
   @Test
   @DisplayName("Visit post query param")
-  void visit_root_post_query_param(Vertx vertx, VertxTestContext testContext) {
+  void visit_post_query_param(Vertx vertx, VertxTestContext testContext) {
       System.out.println("Visit post query param \n");
 
 	  WebClient client = WebClient.create(vertx);
@@ -101,7 +101,7 @@ public class TestMainVerticle {
 
   @Test
   //@DisplayName("Visit post json")
-  void visit_root_post_send_json(Vertx vertx, VertxTestContext testContext) {
+  void visit_post_send_json(Vertx vertx, VertxTestContext testContext) {
       System.out.println("Visit post json \n");
 	  WebClient client = WebClient.create(vertx);
 	  JsonObject dataSend = new JsonObject();
@@ -121,7 +121,7 @@ public class TestMainVerticle {
   }
   
   	@Test
-	void visit_root_post_send_form(Vertx vertx, VertxTestContext testContext) {
+	void visit_post_send_form(Vertx vertx, VertxTestContext testContext) {
   		
   		WebClient client = WebClient.create(vertx);
 		MultiMap form = MultiMap.caseInsensitiveMultiMap();
