@@ -75,6 +75,27 @@ public class TestMainVerticle {
 	  });
 	
   }
+  @Test
+  @DisplayName("Visit event_bus")
+  void visit_event_bus(Vertx vertx, VertxTestContext testContext) {
+      System.out.println("Visit event bus \n");
+
+	  WebClient client = WebClient.create(vertx);
+	 	  
+	  client.get(ConstantsServer.PORT,"localhost","/event_bus").
+	  addQueryParam("key","test_query")
+	  .as(BodyCodec.jsonObject() )
+	  .send(ar->{
+		  	  if (ar.succeeded()) {
+  	  	        HttpResponse<JsonObject> response = ar.result();
+  	  	        assertEquals(response.body().getString("key"), "test_query");
+  	  	        testContext.completeNow();
+		      } else {
+		        ar.cause().printStackTrace();
+		      }
+	  });
+	
+  }
  
 
 

@@ -1,8 +1,9 @@
 package com.example.http;
 
 import io.vertx.core.*;
+import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.http.HttpServer;
-
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;;
@@ -22,6 +23,7 @@ public class HttpServerVerticle extends AbstractVerticle{
 	   router.post("/post_query_param").handler(this::indexPOSTHandlerQueryParam);
 	   router.post("/post_json_param").handler(this::indexPOSTHandlerJsonObject);
 	   router.post("/post_form_param").handler(this::indexPOSTHandlerForm);
+	   router.get("/event_bus").handler(this::useEventBus);
 	   
 	   server.requestHandler(router);
 	   
@@ -93,4 +95,29 @@ public class HttpServerVerticle extends AbstractVerticle{
 	      });
 	 }
 
+	 private void useEventBus(RoutingContext context) {
+		 
+		 EventBus eventBus = vertx.eventBus();
+		 
+		 eventBus
+		 .request(
+				 "news.uk.sport", 
+				 context.request().getParam("key"),
+				 replay->{
+				 	context
+				 	.request()
+				 	.response()
+				 	.end(
+				 			new JsonObject()
+				 			.put(
+				 					"key",
+				 					replay.result().body()).encodePrettily()
+			 			);
+				 }
+		 );
+		 
+		
+		
+
+	 }
 }
